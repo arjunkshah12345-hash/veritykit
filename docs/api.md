@@ -14,7 +14,10 @@ Conservative surface. Named exports only.
 | `judge` | `judge({ rubric, score })` |
 | `latent` / `jepo` | `latent()` · `jepo({ samples, maxTokens })` |
 | `reformulate` | `reformulate({ compare }).rank(texts)` |
-| `score` | `score(ran(), metric('coverage'), …)` |
+| `score` | `score(gate(ran()), gate(uses(re)), metric('coverage'), …)` |
+| `gate` / `uses` | Hard compile / allowlist checks |
+| `pairwise` | Win-rate against a reference pool |
+| `combine` | Mix verifiers. `gate: true` zeros the rest |
 | `httpPolicy` | `httpPolicy({ model, apiKey, baseURL })` |
 | `mockPolicy` | `mockPolicy((prompt, i) => text)` |
 | `exportGroups` | `exportGroups(groups)` → JSONL |

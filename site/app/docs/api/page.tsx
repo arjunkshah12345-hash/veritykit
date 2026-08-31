@@ -106,8 +106,28 @@ export default function ApiDocs() {
               <code>score</code>
             </td>
             <td>
-              <code>score(ran(), metric(&apos;coverage&apos;), …)</code>
+              <code>score(gate(ran()), gate(uses(re)), metric(&apos;coverage&apos;), …)</code>
             </td>
+          </tr>
+          <tr>
+            <td>
+              <code>gate</code> / <code>uses</code>
+            </td>
+            <td>Hard compile / allowlist checks</td>
+          </tr>
+          <tr>
+            <td>
+              <code>pairwise</code>
+            </td>
+            <td>
+              <code>pairwise({"{ references, compare, n }"})</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>combine</code>
+            </td>
+            <td>Mix verifiers. <code>gate: true</code> zeros the rest</td>
           </tr>
           <tr>
             <td>

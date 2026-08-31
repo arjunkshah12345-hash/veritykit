@@ -10,6 +10,7 @@ const LINKS = [
   { href: "/docs/methods", label: "Methods" },
   { href: "/docs/environments", label: "Environments" },
   { href: "/docs/paint", label: "Paint JS" },
+  { href: "/docs/reward", label: "Reward" },
   { href: "/docs/examples", label: "Examples" },
   { href: "/docs/api", label: "API" },
 ];

@@ -1,7 +1,10 @@
 import { execute, process } from "../bridges/index.js";
 import { dataset } from "../data/dataset.js";
-import { metric, ran, score } from "../verify/score.js";
+import { gate, metric, ran, score, uses } from "../verify/score.js";
 import { environment } from "./environment.js";
+
+/** Allowed canvas calls. A short allowlist beats a long API dump. */
+export const CANVAS_API = /fillRect|strokeRect|fillStyle|beginPath|\.arc\(|\.fill\(/;
 
 export const PAINT_PROMPTS = [
   "Paint a sunset over water using JavaScript canvas.",
@@ -14,7 +17,12 @@ export function paintEnvironment(prompts: string[] = PAINT_PROMPTS) {
     name: "paint-js",
     tasks: prompts.map((prompt, i) => ({ id: `paint-${i}`, prompt })),
     bridge: execute({ runtime: "canvas", size: 64 }),
-    verifier: score(ran(2), metric("coverage", 2), metric("colorDiversity", 2), metric("bbox", 1)),
+    verifier: score(
+      gate(ran()),
+      gate(uses(CANVAS_API)),
+      metric("coverage"),
+      metric("colorDiversity"),
+    ),
   });
 }
 

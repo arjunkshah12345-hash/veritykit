@@ -34,7 +34,7 @@ export function reinforce(options: ReinforceOptions): Method {
             task,
             completion: { text },
             witness,
-            reward: verifier.score({ task, completion: text, witness }),
+            reward: await verifier.score({ task, completion: text, witness }),
           });
         }
         episodes.push(...advantages(scored));

@@ -19,7 +19,7 @@ await createTrainer({
 const PROMPTS = [
   {
     title: "Train a model to paint with JavaScript.",
-    text: "Use Verity to SFT a tiny GPT on canvas programs, then GRPO with execute({ runtime: 'canvas' }). Score ran, coverage, and colorDiversity. Keep the example runnable without an API key.",
+    text: "SFT on canvas programs, then GRPO with execute({ runtime: 'canvas' }). Gate on ran and uses(CANVAS_API). Score coverage and colorDiversity only. Do not add a stack of aesthetic judges. Keep it runnable without an API key.",
   },
   {
     title: "Train on proofs that have no short answer.",

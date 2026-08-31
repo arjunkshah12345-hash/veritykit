@@ -33,6 +33,12 @@ rollout(env, policy)
 httpPolicy — eval only
 mockPolicy — tests
 
+## Reward
+
+gate(ran()), gate(uses(CANVAS_API)), pairwise({ references, compare })
+combine({ verifier: compile, gate: true }, { verifier: taste })
+Do not stack correlated aesthetic judges.
+
 ## Docs
 
-/docs /docs/install /docs/bridges /docs/methods /docs/environments /docs/paint /docs/examples /docs/api
+/docs /docs/install /docs/bridges /docs/methods /docs/environments /docs/paint /docs/reward /docs/examples /docs/api

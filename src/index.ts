@@ -7,12 +7,12 @@ export { dataset, batches, mixData, chunkText } from "./data/dataset.js";
 export type { Dataset } from "./data/dataset.js";
 
 export { execute, match, process, judge, latent, reformulate, compose } from "./bridges/index.js";
-export { score, ran, metric, ok, verify, defaultVerifier } from "./verify/score.js";
+export { score, ran, metric, ok, gate, uses, pairwise, combine, verify, defaultVerifier } from "./verify/score.js";
 export { extractCode, splitThought } from "./runtime/extract.js";
 
 export { environment, rollout } from "./env/environment.js";
 export { exportGroups } from "./env/export.js";
-export { paintEnvironment, paintCorpus, proofCorpus, processSketch } from "./env/presets.js";
+export { CANVAS_API, paintEnvironment, paintCorpus, proofCorpus, processSketch } from "./env/presets.js";
 
 export { createTrainer } from "./train/trainer.js";
 export { sft } from "./train/sft.js";

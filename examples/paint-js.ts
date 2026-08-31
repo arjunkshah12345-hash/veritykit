@@ -2,13 +2,16 @@ import {
   CharTokenizer,
   createModel,
   createTrainer,
+  CANVAS_API,
   execute,
+  gate,
   metric,
   paintCorpus,
   ran,
   reinforce,
   score,
   sft,
+  uses,
 } from "../src/index.js";
 
 const corpus = paintCorpus();
@@ -38,7 +41,7 @@ await createTrainer({
   model,
   method: reinforce({
     bridge: execute({ runtime: "canvas", size: 48 }),
-    verifier: score(ran(2), metric("coverage"), metric("colorDiversity"), metric("ink")),
+    verifier: score(gate(ran()), gate(uses(CANVAS_API)), metric("coverage"), metric("colorDiversity")),
     generations: 3,
     maxTokens: 120,
   }),

@@ -73,7 +73,7 @@ export type Bridge = {
 };
 
 export type Verifier = {
-  score(input: { task: Task; completion: string; witness: Witness }): number;
+  score(input: { task: Task; completion: string; witness: Witness }): number | Promise<number>;
 };
 
 export type MethodName = "sft" | "dpo" | "grpo" | "jepo" | "process" | "mix";

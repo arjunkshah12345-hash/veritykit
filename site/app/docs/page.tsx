@@ -37,6 +37,9 @@ export default function DocsHome() {
         <li>
           Hosted models: <Link href="/docs/environments">environment</Link>, then export advantages
         </li>
+        <li>
+          Aesthetic tasks: read <Link href="/docs/reward">Reward</Link> before stacking judges
+        </li>
       </ul>
 
       <h3>What ships</h3>

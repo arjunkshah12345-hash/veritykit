@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CopyBlock } from "../../components/CopyBlock";
 
 export const metadata: Metadata = {
@@ -6,7 +7,7 @@ export const metadata: Metadata = {
   description: "SFT on canvas programs, then GRPO against an executor.",
 };
 
-const CODE = `import { createTrainer, execute, metric, paintCorpus, ran, reinforce, score, sft } from 'veritykit'
+const CODE = `import { CANVAS_API, createTrainer, execute, gate, metric, paintCorpus, ran, reinforce, score, sft, uses } from 'veritykit'
 
 await createTrainer({ model, method: sft() }).fit(paintCorpus())
 
@@ -14,7 +15,7 @@ await createTrainer({
   model,
   method: reinforce({
     bridge: execute({ runtime: 'canvas', size: 64 }),
-    verifier: score(ran(2), metric('coverage'), metric('colorDiversity')),
+    verifier: score(gate(ran()), gate(uses(CANVAS_API)), metric('coverage'), metric('colorDiversity')),
   }),
 }).fit(paintCorpus().map(({ prompt }) => ({ prompt })))`;
 
@@ -23,20 +24,14 @@ export default function PaintDocs() {
     <article>
       <h2>Paint with JavaScript</h2>
       <p>
-        The picture is subjective. The program is not. Execute it, measure coverage and color, then
-        train.
+        The picture is subjective. The program is not. Gate on “it ran” and “it used the API.” Score
+        what you can measure. For taste, use pairwise against a pool.
       </p>
       <CopyBlock code={CODE}>{CODE}</CopyBlock>
-      <p>
-        Recipe: SFT on a few working canvas programs, then GRPO against the executor. That is the
-        same order used by SVG / frontend RL work (SFT, then a visual or metric reward).
-      </p>
-
-      <h3>What the executor reports</h3>
       <table className="docs-table">
         <thead>
           <tr>
-            <th>Metric</th>
+            <th>Signal</th>
             <th>Meaning</th>
           </tr>
         </thead>
@@ -49,32 +44,27 @@ export default function PaintDocs() {
           </tr>
           <tr>
             <td>
+              <code>uses</code>
+            </td>
+            <td>The completion touched the allowlist</td>
+          </tr>
+          <tr>
+            <td>
               <code>coverage</code>
             </td>
-            <td>Share of pixels that are not the blank background</td>
+            <td>Non-blank pixels</td>
           </tr>
           <tr>
             <td>
               <code>colorDiversity</code>
             </td>
-            <td>How many distinct quantized colors showed up</td>
-          </tr>
-          <tr>
-            <td>
-              <code>ink</code>
-            </td>
-            <td>Non-white mass. Zero ink means the canvas stayed empty.</td>
+            <td>Distinct quantized colors</td>
           </tr>
         </tbody>
       </table>
-
-      <h3>Safety</h3>
       <p>
-        The bundled runner uses <code>node:vm</code> plus a software canvas. It is isolation for a
-        training loop, not a production security sandbox.
-      </p>
-      <p>
-        Run the full example with <code>pnpm example:paint</code>.
+        Reward design is in <Link href="/docs/reward">Reward</Link>. Run{" "}
+        <code>pnpm example:paint</code>.
       </p>
     </article>
   );

@@ -7,6 +7,7 @@ The site in `site/` is this material with a live type hero.
 - [Methods](./methods.md)
 - [Environments](./environments.md)
 - [Paint with JavaScript](./paint.md)
+- [Reward](./reward.md)
 - [Examples](./examples.md)
 - [API](./api.md)
 

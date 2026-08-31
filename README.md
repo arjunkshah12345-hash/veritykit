@@ -46,7 +46,7 @@ Node 18+. No runtime dependencies.
 | `judge` | You accept a critic | A contracted score |
 | `latent` / `jepo` | Nothing is checkable | Thought is z. Last span is y. |
 
-Painting in JavaScript is the headline case. The picture is subjective. The program is not.
+Painting in JavaScript is the headline case. The picture is subjective. The program is not. Gate on compile and the API. For taste, pairwise against a pool — not five aesthetic judges.
 
 ## Methods
 
