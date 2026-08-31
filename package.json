@@ -1,0 +1,61 @@
+{
+  "name": "veritykit",
+  "version": "0.1.0",
+  "description": "Make the unverifiable trainable.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arjunkshah12345-hash/veritykit.git"
+  },
+  "homepage": "https://github.com/arjunkshah12345-hash/veritykit",
+  "bugs": {
+    "url": "https://github.com/arjunkshah12345-hash/veritykit/issues"
+  },
+  "author": "Arjun Shah",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist"],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "example:lm": "tsx examples/char-lm.ts",
+    "example:paint": "tsx examples/paint-js.ts",
+    "example:open": "tsx examples/unverifiable.ts",
+    "site": "pnpm --dir site dev",
+    "site:build": "pnpm --dir site build"
+  },
+  "keywords": [
+    "machine-learning",
+    "training",
+    "neural-network",
+    "sft",
+    "dpo",
+    "grpo",
+    "jepo",
+    "unverifiable",
+    "rlvr",
+    "typescript"
+  ],
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

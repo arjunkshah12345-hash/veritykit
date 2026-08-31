@@ -1,0 +1,38 @@
+# Verity
+
+Make the unverifiable trainable.
+
+Package: veritykit
+License: MIT
+Loop: task → model → completion → bridge → witness → method → update
+
+## Install
+
+pnpm add veritykit
+
+## Local train
+
+import { createModel, createTrainer, execute, reinforce, sft } from 'veritykit'
+const model = createModel(code, { dim: 64, layers: 2, heads: 4 })
+await createTrainer({ model, method: sft() }).fit(labeled)
+await createTrainer({ model, method: reinforce({ bridge: execute({ runtime: 'canvas' }) }) }).fit(paintTasks)
+
+## Methods
+
+sft, prefer, reinforce, jepo, processMethod, mix
+mix() accumulates gradients. The trainer steps once.
+
+## Bridges
+
+execute, match, process, judge, latent, reformulate, compose
+
+## Environments
+
+environment({ name, tasks, bridge, verifier })
+rollout(env, policy)
+httpPolicy — eval only
+mockPolicy — tests
+
+## Docs
+
+/docs /docs/install /docs/bridges /docs/methods /docs/environments /docs/paint /docs/examples /docs/api

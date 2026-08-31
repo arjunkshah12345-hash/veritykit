@@ -1,0 +1,11 @@
+node_modules
+dist
+.turbo
+.DS_Store
+*.log
+coverage
+.verity
+site/.next
+site/node_modules
+site/.git
+site/.turbo
