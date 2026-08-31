@@ -4,9 +4,12 @@ import { CharTokenizer } from "../src/nn/tokenizer.js";
 import { dataset } from "../src/data/dataset.js";
 import { sft } from "../src/train/sft.js";
 import { createTrainer } from "../src/train/trainer.js";
-import { advantages } from "../src/train/advantage.js";
-import { execute, match } from "../src/bridges/index.js";
+import { advantages, groupByTask } from "../src/train/advantage.js";
+import { execute, match, process, reformulate } from "../src/bridges/index.js";
 import { prefer } from "../src/train/dpo.js";
+import { processMethod } from "../src/train/process.js";
+import { mix } from "../src/train/mix.js";
+import { exportGroups } from "../src/env/export.js";
 import { splitThought } from "../src/runtime/extract.js";
 
 describe("training", () => {
@@ -77,5 +80,73 @@ describe("training", () => {
     const miss = await bridge.run({ task: { prompt: "q", answer: "42" }, completion: "41" });
     expect(hit.ok).toBe(true);
     expect(miss.ok).toBe(false);
+  });
+
+  it("process scores step rules", async () => {
+    const bridge = process({
+      steps: [
+        { name: "step", test: /step 1/i },
+        { name: "final", test: /final:/i },
+      ],
+    });
+    const hit = await bridge.run({
+      task: { prompt: "p" },
+      completion: "Step 1: plan.\nFinal: done.",
+    });
+    const miss = await bridge.run({ task: { prompt: "p" }, completion: "nope" });
+    expect(hit.metrics.process).toBe(1);
+    expect(miss.metrics.process).toBe(0);
+  });
+
+  it("reformulate ranks longer structured text higher", () => {
+    const ranks = reformulate().rank(["x", "Step 1\nStep 2\nFinal: a clear answer."]);
+    expect(ranks[1]!).toBeGreaterThan(ranks[0]!);
+  });
+
+  it("exportGroups writes JSONL with advantages", () => {
+    const groups = groupByTask([
+      {
+        task: { id: "t", prompt: "p" },
+        completion: { text: "a" },
+        witness: { ok: true, kind: "match", metrics: { match: 1 }, logs: [] },
+        reward: 1,
+      },
+      {
+        task: { id: "t", prompt: "p" },
+        completion: { text: "b" },
+        witness: { ok: true, kind: "match", metrics: { match: 0 }, logs: [] },
+        reward: 0,
+      },
+    ]);
+    const row = JSON.parse(exportGroups(groups).split("\n")[0]!);
+    expect(row.episodes).toHaveLength(2);
+    expect(row.episodes[0].advantage + row.episodes[1].advantage).toBeCloseTo(0);
+  });
+
+  it("mix runs both methods without throwing", async () => {
+    const tok = CharTokenizer.fromText("step 1 final: ok hello ");
+    const model = createModel(tok, { dim: 16, layers: 1, heads: 2, context: 24, seed: 8 });
+    const data = dataset([
+      { prompt: "why", completion: "Step 1: because.\nFinal: ok." },
+    ]);
+    const result = await createTrainer({
+      model,
+      method: mix(
+        { method: sft(), weight: 0.5 },
+        {
+          method: processMethod({
+            steps: [
+              { name: "step", test: /step 1/i },
+              { name: "final", test: /final:/i },
+            ],
+          }),
+          weight: 0.5,
+        },
+      ),
+      epochs: 1,
+      batchSize: 1,
+      optimizer: { lr: 4e-3, weightDecay: 0 },
+    }).fit(data);
+    expect(Number.isFinite(result.losses[0]!)).toBe(true);
   });
 });

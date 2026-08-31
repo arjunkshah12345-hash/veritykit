@@ -9,7 +9,7 @@ const env = paintEnvironment();
 const groups = await rollout(env, httpPolicy({ model: "openai/gpt-4.1-mini" }));
 ```
 
-`httpPolicy` is OpenAI-compatible. It does not backprop. Export the groups (advantage already computed) into TRL, veRL, or ART.
+`httpPolicy` is OpenAI-compatible. It does not backprop. `exportGroups(groups)` writes JSONL. Advantage is already computed.
 
 ```ts
 import { mockPolicy, paintEnvironment, rollout } from "veritykit";

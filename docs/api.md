@@ -17,5 +17,6 @@ Conservative surface. Named exports only.
 | `score` | `score(ran(), metric('coverage'), …)` |
 | `httpPolicy` | `httpPolicy({ model, apiKey, baseURL })` |
 | `mockPolicy` | `mockPolicy((prompt, i) => text)` |
+| `exportGroups` | `exportGroups(groups)` → JSONL |
 
 Types: `Task`, `Witness`, `Bridge`, `Method`, `Policy`, `Episode`, `Group`.

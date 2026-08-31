@@ -12,7 +12,7 @@ export class CausalSelfAttention extends Module {
 
   constructor(dim: number, heads: number, seed: number) {
     super();
-    if (dim % heads !== 0) throw new Error("dim must divide heads");
+    if (dim % heads !== 0) throw new Error("heads must divide dim");
     this.dim = dim;
     this.heads = heads;
     this.q = new Linear(dim, dim, seed);

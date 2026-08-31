@@ -26,7 +26,10 @@ export function httpPolicy(config: HttpPolicyConfig): Policy {
           messages: [{ role: "user", content: prompt }],
         }),
       });
-      if (!res.ok) throw new Error(`httpPolicy ${res.status}: ${await res.text()}`);
+      if (!res.ok) {
+        const body = (await res.text()).slice(0, 240);
+        throw new Error(`httpPolicy ${res.status}: ${body}`);
+      }
       const json = (await res.json()) as {
         choices: Array<{ message?: { content?: string }; text?: string }>;
       };

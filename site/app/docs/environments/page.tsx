@@ -34,8 +34,8 @@ export default function EnvironmentsDocs() {
       </p>
       <CopyBlock code={EVAL}>{EVAL}</CopyBlock>
       <p>
-        <code>httpPolicy</code> is OpenAI-compatible. It does not backprop. Export the groups
-        (advantage already computed) into TRL, veRL, or ART.
+        <code>httpPolicy</code> is OpenAI-compatible. It does not backprop.{" "}
+        <code>exportGroups(groups)</code> writes JSONL. Advantage is already computed.
       </p>
 
       <h3>No API key</h3>

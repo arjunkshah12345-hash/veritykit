@@ -1,9 +1,11 @@
 # Verity
 
+[![ci](https://github.com/arjunkshah12345-hash/veritykit/actions/workflows/ci.yml/badge.svg)](https://github.com/arjunkshah12345-hash/veritykit/actions/workflows/ci.yml)
+
 Make the unverifiable trainable.
 
 <p align="center">
-  <img src="brand/og.png" alt="Verity — Make the unverifiable trainable." width="720" />
+  <img src="brand/banner.jpg" alt="Verity" width="720" />
 </p>
 
 ```ts
@@ -57,7 +59,7 @@ Painting in JavaScript is the headline case. The picture is subjective. The prog
 | `processMethod({ steps })` | Regex or function checks | Token loss × rules |
 | `mix(...parts)` | Any of the above | One step. Weighted grads. |
 
-`createTrainer` updates the local GPT. For a hosted model, use `environment` + `httpPolicy`, then export groups (advantage already computed).
+`createTrainer` updates the local GPT. For a hosted model, `environment` + `httpPolicy`, then `exportGroups()` — advantage already computed.
 
 ## Examples
 
@@ -72,7 +74,7 @@ The JS runner uses `node:vm`. Isolation for a training loop, not a security sand
 
 ## Docs
 
-Written: [`docs/`](./docs/README.md). Site: `pnpm site`.
+[`docs/`](./docs/README.md) · `pnpm site`
 
 ## License
 

@@ -125,6 +125,14 @@ export default function ApiDocs() {
               <code>mockPolicy((prompt, i) =&gt; text)</code>
             </td>
           </tr>
+          <tr>
+            <td>
+              <code>exportGroups</code>
+            </td>
+            <td>
+              <code>exportGroups(groups)</code> → JSONL
+            </td>
+          </tr>
         </tbody>
       </table>
       <CopyBlock code={TYPES}>{TYPES}</CopyBlock>
