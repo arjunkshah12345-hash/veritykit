@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { box-sizing: border-box; margin: 0; }
+      html, body { width: 1600px; height: 900px; overflow: hidden; background: #111; color: #fff; }
+      body {
+        font-family: Geist, Helvetica, sans-serif;
+        padding: 80px 64px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .kicker {
+        font-size: 13px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #a3a3a3;
+      }
+      h1 {
+        font-family: "Instrument Serif", Georgia, serif;
+        font-weight: 400;
+        font-size: 56px;
+      }
+      .row { display: flex; align-items: stretch; gap: 10px; }
+      .step {
+        flex: 1;
+        background: #1a1a1a;
+        border: 1px solid #2a2a2a;
+        min-height: 200px;
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        font-size: 22px;
+      }
+      .step[data-hi] { background: #fae54d; color: #111; border-color: #fae54d; }
+      .arr { color: #525252; display: flex; align-items: center; font-size: 24px; }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="kicker">The contract</div>
+      <h1>task → model → completion → witness → update</h1>
+    </div>
+    <div class="row">
+      <div class="step">task</div>
+      <div class="arr">→</div>
+      <div class="step">model</div>
+      <div class="arr">→</div>
+      <div class="step">completion</div>
+      <div class="arr">→</div>
+      <div class="step">bridge</div>
+      <div class="arr">→</div>
+      <div class="step" data-hi>witness</div>
+      <div class="arr">→</div>
+      <div class="step">method</div>
+      <div class="arr">→</div>
+      <div class="step">update</div>
+    </div>
+  </body>
+</html>

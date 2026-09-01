@@ -17,6 +17,7 @@ export function CopyBlock({
         className="usage-copy-button"
         type="button"
         aria-label={copied ? "Copied" : "Copy to clipboard"}
+        aria-live="polite"
         onClick={async () => {
           await navigator.clipboard.writeText(code);
           setCopied(true);

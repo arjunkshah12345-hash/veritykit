@@ -1,6 +1,6 @@
 # Docs
 
-The site in `site/` is this material with a live type hero.
+Install, methods, reward, and examples. The site in `site/` is the same material.
 
 - [Install](./install.md)
 - [Bridges](./bridges.md)
@@ -12,9 +12,7 @@ The site in `site/` is this material with a live type hero.
 - [API](./api.md)
 
 ```
-task → model → completion → bridge → witness → method → update
+prompt → model → score → update
 ```
-
-A witness is evidence the work happened: pixels, a process trace, a ranking, or a latent thought/answer split.
 
 The local trainer is a reference. For a large model, collect groups and hand them to TRL, veRL, or ART.

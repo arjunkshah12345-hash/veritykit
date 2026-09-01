@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@500&family=Instrument+Serif&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { box-sizing: border-box; margin: 0; }
+      html, body { width: 1600px; height: 900px; overflow: hidden; background: #111; color: #fff; }
+      body {
+        font-family: Geist, Helvetica, sans-serif;
+        padding: 56px 56px 48px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .kicker {
+        font-size: 13px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #a3a3a3;
+      }
+      h1 {
+        font-family: "Instrument Serif", Georgia, serif;
+        font-weight: 400;
+        font-size: 48px;
+        margin-top: 12px;
+      }
+      .row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+      figure { margin: 0; }
+      figure img { width: 100%; height: 520px; object-fit: cover; display: block; }
+      figcaption {
+        margin-top: 12px;
+        font-size: 14px;
+        color: #a3a3a3;
+        letter-spacing: 0.04em;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="kicker">Witnesses</div>
+      <h1>They ran. They used the API. That is the grade.</h1>
+    </div>
+    <div class="row">
+      <figure>
+        <img src="../out/sunset-hi.png" alt="" />
+        <figcaption>sunset · coverage 1</figcaption>
+      </figure>
+      <figure>
+        <img src="../out/night-hi.png" alt="" />
+        <figcaption>night · ran 1</figcaption>
+      </figure>
+      <figure>
+        <img src="../out/tree-hi.png" alt="" />
+        <figcaption>tree · uses 1</figcaption>
+      </figure>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { box-sizing: border-box; margin: 0; }
+      html, body { width: 1600px; height: 900px; overflow: hidden; background: #111; color: #fff; }
+      body {
+        font-family: Geist, Helvetica, sans-serif;
+        padding: 80px 72px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .kicker {
+        font-size: 13px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #a3a3a3;
+      }
+      h1 {
+        font-family: "Instrument Serif", Georgia, serif;
+        font-weight: 400;
+        font-size: 64px;
+        letter-spacing: -0.02em;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 14px;
+        align-items: stretch;
+      }
+      .step, .arrow {
+        min-height: 168px;
+        display: flex;
+        align-items: flex-end;
+        padding: 22px;
+      }
+      .step {
+        background: #1a1a1a;
+        border: 1px solid #2a2a2a;
+      }
+      .arrow {
+        color: #737373;
+        font-size: 28px;
+        justify-content: center;
+        padding: 0;
+        min-height: 168px;
+      }
+      .step span {
+        font-size: 22px;
+        letter-spacing: -0.02em;
+      }
+      .step[data-hi] {
+        background: #fae54d;
+        color: #111;
+        border-color: #fae54d;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="kicker">Verity</div>
+      <h1>The loop.</h1>
+    </div>
+    <div class="row">
+      <div class="step"><span>task</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><span>model</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><span>completion</span></div>
+      <div class="arrow">→</div>
+      <div class="step" data-hi><span>witness</span></div>
+    </div>
+  </body>
+</html>

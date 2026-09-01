@@ -11,7 +11,8 @@ const EXAMPLES = `pnpm install
 pnpm test
 pnpm example:lm
 pnpm example:paint
-pnpm example:open`;
+pnpm example:open
+pnpm example:eval`;
 
 export default function InstallDocs() {
   return (
@@ -36,13 +37,13 @@ export default function InstallDocs() {
             <td>
               <code>createTrainer</code>
             </td>
-            <td>Update the local GPT. Prove a method.</td>
+            <td>Train the local GPT.</td>
           </tr>
           <tr>
             <td>
               <code>environment</code> + <code>httpPolicy</code>
             </td>
-            <td>Roll out a hosted model. Collect witnesses and advantages.</td>
+            <td>Score a hosted model. Write JSONL groups.</td>
           </tr>
         </tbody>
       </table>

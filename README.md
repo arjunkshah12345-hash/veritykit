@@ -1,30 +1,31 @@
 # Verity
 
+Train language models in TypeScript.
+
+SFT, DPO, and GRPO. One trainer. No runtime dependencies. MIT.
+
+**Site:** [verity.arjunshah.xyz](https://verity.arjunshah.xyz)
+
 [![ci](https://github.com/arjunkshah12345-hash/veritykit/actions/workflows/ci.yml/badge.svg)](https://github.com/arjunkshah12345-hash/veritykit/actions/workflows/ci.yml)
 
-Make the unverifiable trainable.
-
-<p align="center">
-  <img src="brand/banner.jpg" alt="Verity" width="720" />
-</p>
-
 ```ts
-import { createModel, createTrainer, execute, reinforce, sft } from "veritykit";
+import { CharTokenizer, createModel, createTrainer, dataset, sft } from "veritykit";
 
-const model = createModel(code, { dim: 64, layers: 2, heads: 4 });
+const text = `the sea is calm tonight
+the tide is full the moon lies fair`;
 
-await createTrainer({ model, method: sft() }).fit(labeled);
+const model = createModel(CharTokenizer.fromText(text), {
+  dim: 32,
+  layers: 2,
+  heads: 4,
+  context: 48,
+});
 
-await createTrainer({
-  model,
-  method: reinforce({ bridge: execute({ runtime: "canvas" }) }),
-}).fit(paintTasks);
-```
+await createTrainer({ model, method: sft(), epochs: 40 }).fit(
+  dataset([{ prompt: "", target: text }]),
+);
 
-A completion is not a label. A **witness** is. Run the program, check the steps, rank the samples, or treat the thought as latent. Then train.
-
-```
-task → model → completion → bridge → witness → method → update
+console.log(model.sample("the sea", { maxTokens: 60 }));
 ```
 
 ## Install
@@ -33,39 +34,54 @@ task → model → completion → bridge → witness → method → update
 pnpm add veritykit
 ```
 
-Node 18+. No runtime dependencies.
+Node 18+. Local GPT in the package. For a hosted model, roll out groups and hand them to your trainer.
 
-## Bridges
+## Train
 
-| | When | Witness |
-|---|---|---|
-| `execute` | The model emits code | It ran. Metrics exist. |
-| `match` | There is a gold short answer | Classic RLVR |
-| `process` | Structure is checkable | Step rules fired |
-| `reformulate` | Open-ended, no gold | N samples become a ranking |
-| `judge` | You accept a critic | A contracted score |
-| `latent` / `jepo` | Nothing is checkable | Thought is z. Last span is y. |
+Supervised:
 
-Painting in JavaScript is the headline case. The picture is subjective. The program is not. Gate on compile and the API. For taste, pairwise against a pool — not five aesthetic judges.
+```ts
+await createTrainer({ model, method: sft() }).fit(labeled);
+```
+
+Preference:
+
+```ts
+await createTrainer({ model, method: prefer() }).fit(pairs);
+```
+
+Reinforcement. Run the completion, score what happened, update:
+
+```ts
+await createTrainer({
+  model,
+  method: reinforce({
+    bridge: execute({ runtime: "javascript" }),
+    verifier: score(ok()),
+  }),
+}).fit(tasks);
+```
+
+`mix(sft(), prefer(), reinforce(...))` takes one optimizer step.
 
 ## Methods
 
-| | Needs | Loss |
+| | Input | Loss |
 |---|---|---|
 | `sft()` | `target` or `completion` | Next-token. Pads ignored. |
 | `prefer()` | `chosen` / `rejected` | DPO, implicit reference |
-| `reinforce({ bridge })` | A scoreable witness | GRPO |
+| `reinforce({ bridge })` | A scoreable run | GRPO |
 | `jepo()` | Open-ended text | Jensen bound. No verifier. |
 | `processMethod({ steps })` | Regex or function checks | Token loss × rules |
 | `mix(...parts)` | Any of the above | One step. Weighted grads. |
 
-`createTrainer` updates the local GPT. For a hosted model, `environment` + `httpPolicy`, then `exportGroups()` — advantage already computed.
+Painting in JavaScript is the worked RL case: compile, allowlist, then pairwise against a pool. Not a stack of aesthetic judges.
 
 ## Examples
 
 ```bash
 pnpm test
-pnpm example:lm       # SFT a tiny language model
+pnpm example:lm       # SFT a tiny character LM
 pnpm example:paint    # SFT, then GRPO on canvas JS
 pnpm example:open     # SFT + JEPO + process on proofs
 pnpm example:eval     # rollout + exportGroups, no API key

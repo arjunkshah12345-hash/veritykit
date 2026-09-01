@@ -20,8 +20,8 @@ export default function MethodsDocs() {
     <article>
       <h2>Methods</h2>
       <p>
-        A method turns a batch into a loss. <code>mix()</code> accumulates gradients. The trainer
-        steps once.
+        A method is the loss. Pass it to <code>createTrainer</code>. <code>mix()</code> combines
+        methods and still takes one optimizer step.
       </p>
       <table className="docs-table">
         <thead>
@@ -54,15 +54,15 @@ export default function MethodsDocs() {
             <td>
               <code>reinforce({"{ bridge }"})</code>
             </td>
-            <td>A scoreable witness</td>
-            <td>GRPO advantages, then a policy gradient</td>
+            <td>A score from a bridge</td>
+            <td>GRPO, then a policy gradient</td>
           </tr>
           <tr>
             <td>
               <code>jepo()</code>
             </td>
-            <td>Open-ended text. No verifier.</td>
-            <td>Multi-sample Jensen bound. Thought is latent.</td>
+            <td>Open-ended text</td>
+            <td>Multi-sample Jensen bound</td>
           </tr>
           <tr>
             <td>

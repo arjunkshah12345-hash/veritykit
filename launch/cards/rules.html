@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { box-sizing: border-box; margin: 0; }
+      html, body { width: 1600px; height: 900px; overflow: hidden; background: #111; color: #fff; }
+      body {
+        font-family: Geist, Helvetica, sans-serif;
+        padding: 72px 72px 64px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .kicker {
+        font-size: 13px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #a3a3a3;
+      }
+      h1 {
+        font-family: "Instrument Serif", Georgia, serif;
+        font-weight: 400;
+        font-size: 52px;
+        margin-top: 16px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .card {
+        background: #1a1a1a;
+        border: 1px solid #2a2a2a;
+        padding: 28px 30px 32px;
+        min-height: 210px;
+      }
+      .n {
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #fae54d;
+        margin-bottom: 16px;
+      }
+      h2 {
+        font-size: 28px;
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        margin-bottom: 10px;
+      }
+      p { color: #ffffff99; font-size: 18px; line-height: 1.4; max-width: 28ch; }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="kicker">Reward</div>
+      <h1>Four rules. That is the product.</h1>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="n">01</div>
+        <h2>Gate first.</h2>
+        <p>If it did not run, or it did not use the API, the score is 0.</p>
+      </div>
+      <div class="card">
+        <div class="n">02</div>
+        <h2>Do not stack judges.</h2>
+        <p>Five “is this pretty?” scores are one score, five times.</p>
+      </div>
+      <div class="card">
+        <div class="n">03</div>
+        <h2>Prefer pairwise.</h2>
+        <p>A 0–10 compresses. “Which sunset is better?” does not.</p>
+      </div>
+      <div class="card">
+        <div class="n">04</div>
+        <h2>Short allowlist.</h2>
+        <p>A long API dump makes the model invent methods.</p>
+      </div>
+    </div>
+  </body>
+</html>

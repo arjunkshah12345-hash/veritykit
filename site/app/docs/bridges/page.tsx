@@ -3,14 +3,14 @@ import { CopyBlock } from "../../components/CopyBlock";
 
 export const metadata: Metadata = {
   title: "Bridges",
-  description: "Turn a completion into a witness you can score.",
+  description: "Run or check a completion so you can score it.",
 };
 
-const COMPOSE = `import { compose, execute, judge } from 'veritykit'
+const COMPOSE = `import { compose, execute, match } from 'veritykit'
 
 const bridge = compose([
-  { bridge: execute({ runtime: 'canvas' }), weight: 0.6 },
-  { bridge: judge({ rubric: 'Does this look like a sunset?', score }), weight: 0.4 },
+  { bridge: execute({ runtime: 'javascript' }), weight: 0.6 },
+  { bridge: match({ mode: 'contains' }), weight: 0.4 },
 ])`;
 
 export default function BridgesDocs() {
@@ -18,15 +18,15 @@ export default function BridgesDocs() {
     <article>
       <h2>Bridges</h2>
       <p>
-        A bridge turns a completion into a witness. The verifier then reads metrics off that witness
-        and returns a number in [0, 1].
+        A bridge runs or checks the model’s output and returns metrics. The scorer turns those
+        metrics into a number in [0, 1].
       </p>
       <table className="docs-table">
         <thead>
           <tr>
             <th>Bridge</th>
-            <th>Use when</th>
-            <th>What becomes true</th>
+            <th>When</th>
+            <th>Result</th>
           </tr>
         </thead>
         <tbody>
@@ -34,65 +34,50 @@ export default function BridgesDocs() {
             <td>
               <code>execute</code>
             </td>
-            <td>The model emits code, SVG, JS, a sim</td>
-            <td>It ran. Metrics exist.</td>
+            <td>The model writes code</td>
+            <td>It ran. You get pixel or log metrics.</td>
           </tr>
           <tr>
             <td>
               <code>match</code>
             </td>
-            <td>There is a gold short answer</td>
-            <td>Classic RLVR</td>
+            <td>There is a known answer</td>
+            <td>Exact, numeric, or contains</td>
           </tr>
           <tr>
             <td>
               <code>process</code>
             </td>
-            <td>Structure is checkable even if the answer is not</td>
-            <td>Step rules fired</td>
+            <td>You can check steps</td>
+            <td>Which regex or function checks passed</td>
           </tr>
           <tr>
             <td>
               <code>reformulate</code>
             </td>
-            <td>Open-ended, no gold</td>
-            <td>N samples become a ranking</td>
+            <td>No gold answer</td>
+            <td>Rank N samples against each other</td>
           </tr>
           <tr>
             <td>
               <code>judge</code>
             </td>
-            <td>You accept a model critic</td>
-            <td>A contracted score</td>
+            <td>You have a critic function</td>
+            <td>A score you define</td>
           </tr>
           <tr>
             <td>
               <code>latent</code> / <code>jepo</code>
             </td>
-            <td>Nothing is checkable</td>
-            <td>Thought is z, last span is y</td>
+            <td>Open-ended text</td>
+            <td>Split thought from the last span</td>
           </tr>
         </tbody>
       </table>
 
       <h3>Compose</h3>
-      <p>
-        Mix witnesses when one signal is not enough. Typical paint stack: execute for hard
-        constraints, then a judge for “does this look like a sunset.”
-      </p>
+      <p>Combine two checks when one is not enough.</p>
       <CopyBlock code={COMPOSE}>{COMPOSE}</CopyBlock>
-
-      <h3>Research this maps to</h3>
-      <ul>
-        <li>RLVR — match, execute</li>
-        <li>VPRM — process</li>
-        <li>VMR-RLVR — reformulate</li>
-        <li>RULER / RLAIF — judge</li>
-        <li>
-          JEPO (NeurIPS 2025,{" "}
-          <a href="https://arxiv.org/abs/2503.19618">arXiv:2503.19618</a>) — latent / jepo
-        </li>
-      </ul>
     </article>
   );
 }

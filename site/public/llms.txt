@@ -1,26 +1,24 @@
 # Verity
 
-Make the unverifiable trainable.
+Open-source TypeScript training framework. SFT, DPO, GRPO. MIT.
 
+Site: https://verity.arjunshah.xyz
 Package: veritykit
-License: MIT
-Loop: task → model → completion → bridge → witness → method → update
 
 ## Install
 
 pnpm add veritykit
 
-## Local train
+## Train
 
-import { createModel, createTrainer, execute, reinforce, sft } from 'veritykit'
-const model = createModel(code, { dim: 64, layers: 2, heads: 4 })
-await createTrainer({ model, method: sft() }).fit(labeled)
-await createTrainer({ model, method: reinforce({ bridge: execute({ runtime: 'canvas' }) }) }).fit(paintTasks)
+import { CharTokenizer, createModel, createTrainer, dataset, sft } from 'veritykit'
+const text = 'the sea is calm tonight'
+const model = createModel(CharTokenizer.fromText(text), { dim: 32, layers: 2, heads: 4, context: 48 })
+await createTrainer({ model, method: sft(), epochs: 40 }).fit(dataset([{ prompt: '', target: text }]))
 
 ## Methods
 
 sft, prefer, reinforce, jepo, processMethod, mix
-mix() accumulates gradients. The trainer steps once.
 
 ## Bridges
 
@@ -30,15 +28,8 @@ execute, match, process, judge, latent, reformulate, compose
 
 environment({ name, tasks, bridge, verifier })
 rollout(env, policy)
-httpPolicy — eval only
-mockPolicy — tests
-
-## Reward
-
-gate(ran()), gate(uses(CANVAS_API)), pairwise({ references, compare, n, seed })
-combine({ verifier: compile, gate: true }, { verifier: taste })
-canvasPrompt(task) · paintPool()
-Do not stack correlated aesthetic judges.
+httpPolicy: eval only
+mockPolicy: tests
 
 ## Docs
 

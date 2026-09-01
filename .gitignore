@@ -9,3 +9,6 @@ site/.next
 site/node_modules
 site/.git
 site/.turbo
+
+launch/out/
+launch/ready/alt-atmosphere-*.png

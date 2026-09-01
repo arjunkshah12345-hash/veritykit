@@ -4,56 +4,64 @@ import { CopyBlock } from "../components/CopyBlock";
 
 export const metadata: Metadata = {
   title: "Overview",
-  description: "Train models on any data, including data you cannot verify.",
+  description: "TypeScript training framework. SFT, DPO, GRPO.",
 };
 
-const LOOP = `task → model → completion → bridge → witness → method → update`;
+const SETUP = `import { createModel, createTrainer, sft } from 'veritykit'
+
+const model = createModel(text, { dim: 64, layers: 2, heads: 4 })
+await createTrainer({ model, method: sft() }).fit(labeled)`;
 
 export default function DocsHome() {
   return (
     <article>
       <h2>Overview</h2>
       <p>
-        Verity trains on data you cannot verify. The scarce primitive is the bridge: it turns an
-        output into a witness you can score.
+        Verity is a small TypeScript library for training language models. Supervised fine-tuning,
+        preference (DPO), and reinforcement (GRPO) share one trainer.
       </p>
-      <CopyBlock code={LOOP}>{LOOP}</CopyBlock>
+      <CopyBlock code={SETUP}>{SETUP}</CopyBlock>
       <p>
-        A witness is evidence the work happened: pixels, a process trace, a ranking, or a latent
-        thought/answer split.
+        <code>createTrainer</code> updates a local GPT that ships with the package. To score a
+        hosted model, build an environment and call <code>rollout</code>.
       </p>
 
       <h3>Start here</h3>
       <ul>
         <li>
-          <Link href="/docs/install">Install</Link> and run the examples
+          <Link href="/docs/install">Install</Link> and run <code>pnpm example:lm</code>
         </li>
         <li>
-          Pick a <Link href="/docs/bridges">bridge</Link>
+          Pick a <Link href="/docs/methods">method</Link>
         </li>
         <li>
-          Pick a <Link href="/docs/methods">method</Link>, or <code>mix()</code>
+          If you need to run or check the output, pick a <Link href="/docs/bridges">bridge</Link>
         </li>
         <li>
-          Hosted models: <Link href="/docs/environments">environment</Link>, then export advantages
-        </li>
-        <li>
-          Aesthetic tasks: read <Link href="/docs/reward">Reward</Link> before stacking judges
+          Hosted APIs: <Link href="/docs/environments">environments</Link>
         </li>
       </ul>
 
-      <h3>What ships</h3>
+      <h3>What is in the box</h3>
       <table className="docs-table">
         <thead>
           <tr>
             <th>Piece</th>
-            <th>Role</th>
+            <th>What it does</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Tensor + GPT</td>
-            <td>Autograd and a laptop-scale causal LM</td>
+            <td>Model</td>
+            <td>
+              <code>createModel</code> — tiny GPT + tokenizer
+            </td>
+          </tr>
+          <tr>
+            <td>Trainer</td>
+            <td>
+              <code>createTrainer</code> — epochs, batches, Adam
+            </td>
           </tr>
           <tr>
             <td>Methods</td>
@@ -64,25 +72,14 @@ export default function DocsHome() {
           </tr>
           <tr>
             <td>Bridges</td>
-            <td>
-              <code>execute</code> <code>match</code> <code>process</code> <code>judge</code>{" "}
-              <code>latent</code> <code>reformulate</code> <code>compose</code>
-            </td>
+            <td>Run or check a completion so you can score it</td>
           </tr>
           <tr>
             <td>Environments</td>
-            <td>
-              Tasks + bridge + verifier. Hosted models use <code>httpPolicy</code>.
-            </td>
+            <td>Tasks + scorer. Works with the local model or <code>httpPolicy</code></td>
           </tr>
         </tbody>
       </table>
-
-      <h3>Limit</h3>
-      <p>
-        The local trainer is a reference. For a large model, collect groups and hand them to TRL,
-        veRL, or ART.
-      </p>
     </article>
   );
 }

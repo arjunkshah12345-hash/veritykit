@@ -23,8 +23,7 @@ export default function RewardDocs() {
     <article>
       <h2>Reward</h2>
       <p>
-        Aesthetic RL is a reward-design problem. The program can be checked. Taste cannot. Author
-        the few signals that actually move the model.
+        A verifier returns a number in [0, 1]. Keep the signal list short.
       </p>
       <ul>
         <li>

@@ -1,13 +1,13 @@
 {
   "name": "veritykit",
   "version": "0.1.0",
-  "description": "Make the unverifiable trainable.",
+  "description": "Train language models in TypeScript. SFT, DPO, and GRPO. One trainer.",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arjunkshah12345-hash/veritykit.git"
   },
-  "homepage": "https://github.com/arjunkshah12345-hash/veritykit",
+  "homepage": "https://verity.arjunshah.xyz",
   "bugs": {
     "url": "https://github.com/arjunkshah12345-hash/veritykit/issues"
   },
@@ -48,7 +48,6 @@
     "dpo",
     "grpo",
     "jepo",
-    "unverifiable",
     "rlvr",
     "typescript"
   ],

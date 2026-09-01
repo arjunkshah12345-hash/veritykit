@@ -1,37 +1,62 @@
 import Link from "next/link";
 import { GITHUB } from "../lib/links";
 import { CopyBlock } from "./CopyBlock";
-import { PaintDemo } from "./PaintDemo";
 
 const INSTALL = "pnpm add veritykit";
-const AGENT = "Install Verity in this repo and add a paint-js environment.";
-const SETUP = `import { createModel, createTrainer, execute, reinforce, sft } from 'veritykit'
+const AGENT = "Install veritykit. SFT a tiny character LM with createModel, createTrainer, and sft(). Print loss. No API key.";
 
-const model = createModel(code, { dim: 64, layers: 2, heads: 4 })
+const SETUP = `import { CharTokenizer, createModel, createTrainer, dataset, sft } from 'veritykit'
 
-await createTrainer({ model, method: sft() }).fit(labeled)
+const text = \`the sea is calm tonight
+the tide is full the moon lies fair\`
+
+const model = createModel(CharTokenizer.fromText(text), {
+  dim: 32,
+  layers: 2,
+  heads: 4,
+  context: 48,
+})
+
+await createTrainer({ model, method: sft(), epochs: 40 }).fit(
+  dataset([{ prompt: '', target: text }]),
+)
+
+console.log(model.sample('the sea', { maxTokens: 60 }))`;
+
+const RL = `import { execute, ok, reinforce, score } from 'veritykit'
 
 await createTrainer({
   model,
-  method: reinforce({ bridge: execute({ runtime: 'canvas' }) }),
-}).fit(paintTasks)`;
+  method: reinforce({
+    bridge: execute({ runtime: 'javascript' }),
+    verifier: score(ok()),
+  }),
+}).fit(tasks)`;
+
+const HOSTED = `import { exportGroups, httpPolicy, paintEnvironment, rollout } from 'veritykit'
+
+const groups = await rollout(
+  paintEnvironment(),
+  httpPolicy({ model: 'openai/gpt-4.1-mini' }),
+)
+console.log(exportGroups(groups))`;
 
 const PROMPTS = [
   {
-    title: "Train a model to paint with JavaScript.",
-    text: "SFT on canvas programs, then GRPO with execute({ runtime: 'canvas' }). Gate on ran and uses(CANVAS_API). Score coverage and colorDiversity only. Do not add a stack of aesthetic judges. Keep it runnable without an API key.",
+    title: "Supervised fine-tune a tiny model.",
+    text: "Use createModel and createTrainer with sft() on a short labeled dataset. Print loss each step. No API key.",
   },
   {
-    title: "Train on proofs that have no short answer.",
-    text: "Add a Verity trainer that mixes sft(), jepo(), and processMethod() on long-form proofs. Split thought from the final sentence. Do not invent a gold answer.",
+    title: "Add preference training.",
+    text: "Fit prefer() on rows with chosen and rejected completions. Keep the same model and trainer.",
   },
   {
-    title: "Turn an open-ended task into a ranking.",
-    text: "Use reformulate() so N completions of the same prompt become a pairwise ranking. Export GRPO advantages as JSONL.",
+    title: "Score generated code.",
+    text: "Use reinforce() with execute({ runtime: 'javascript' }). Reward 1 if the program runs.",
   },
   {
-    title: "Score a hosted model. Do not backprop through it.",
-    text: "Create a paintEnvironment(), evaluate it with httpPolicy({ model: 'openai/gpt-4.1-mini' }), and print mean reward. Do not backprop through the HTTP policy.",
+    title: "Evaluate a hosted model.",
+    text: "Build an environment with tasks and a verifier. Roll it out with httpPolicy. Print mean reward. Do not backprop.",
   },
 ];
 
@@ -39,13 +64,7 @@ export function UsageGuide() {
   return (
     <section className="usage-guide" data-theme="dark" aria-label="Verity setup guide">
       <div className="usage-content">
-        <section className="usage-section" id="demo" aria-labelledby="demo-title">
-          <h2 id="demo-title">Demo</h2>
-          <p>JavaScript ran. Pixels exist. Those numbers are a reward.</p>
-          <PaintDemo />
-        </section>
-
-        <section className="usage-section" id="installation" aria-labelledby="installation-title">
+        <section className="usage-section" id="install" aria-labelledby="installation-title">
           <div className="usage-heading-row">
             <h2 id="installation-title">Install</h2>
             <a className="usage-github-link" href={GITHUB} aria-label="GitHub">
@@ -54,58 +73,93 @@ export function UsageGuide() {
               </svg>
             </a>
           </div>
-          <p>Add the package.</p>
+          <p>Open-source TypeScript training. Node 18+. No runtime dependencies.</p>
           <CopyBlock code={INSTALL}>
             <span className="usage-syntax usage-syntax--keyword">pnpm add</span>
             <span> veritykit</span>
           </CopyBlock>
           <p>Or tell an agent.</p>
           <CopyBlock code={AGENT}>{AGENT}</CopyBlock>
-          <p>
-            Local training is a model plus a method. <code>execute</code> turns JavaScript into
-            pixels you can score.
-          </p>
+        </section>
+
+        <section className="usage-section" id="example" aria-labelledby="example-title">
+          <h2 id="example-title">Train a tiny model</h2>
+          <p>Same script as <code>pnpm example:lm</code>. Loss should fall. Then sample.</p>
           <CopyBlock code={SETUP}>
             <span className="usage-syntax usage-syntax--keyword">import</span>
-            {" { createModel, createTrainer, execute, reinforce, sft } "}
+            {" { CharTokenizer, createModel, createTrainer, dataset, sft } "}
             <span className="usage-syntax usage-syntax--keyword">from</span>{" "}
             <span className="usage-syntax usage-syntax--string">&apos;veritykit&apos;</span>
             {"\n\n"}
             <span className="usage-syntax usage-syntax--keyword">const</span>
-            {" model = createModel(code, "}
+            {" text = `the sea is calm tonight\nthe tide is full the moon lies fair`\n\n"}
+            <span className="usage-syntax usage-syntax--keyword">const</span>
+            {" model = createModel(CharTokenizer.fromText(text), "}
             <span className="usage-syntax usage-syntax--brace">{"{"}</span>
-            {" dim: 64, layers: 2, heads: 4 "}
+            {"\n  dim: 32,\n  layers: 2,\n  heads: 4,\n  context: 48,\n"}
             <span className="usage-syntax usage-syntax--brace">{"}"}</span>
             {")\n\n"}
             {"await createTrainer("}
             <span className="usage-syntax usage-syntax--brace">{"{"}</span>
-            {" model, method: sft() "}
+            {" model, method: sft(), epochs: 40 "}
             <span className="usage-syntax usage-syntax--brace">{"}"}</span>
-            {").fit(labeled)\n\n"}
-            {"await createTrainer("}
+            {").fit(\n  dataset(["}
             <span className="usage-syntax usage-syntax--brace">{"{"}</span>
-            {"\n  model,\n  method: reinforce("}
+            {" prompt: '', target: text "}
+            <span className="usage-syntax usage-syntax--brace">{"}"}</span>
+            {"]),\n)\n\nconsole.log(model.sample('the sea', "}
             <span className="usage-syntax usage-syntax--brace">{"{"}</span>
-            {" bridge: execute("}
-            <span className="usage-syntax usage-syntax--brace">{"{"}</span>
-            {" runtime: "}
-            <span className="usage-syntax usage-syntax--string">&apos;canvas&apos;</span>
-            {" "}
+            {" maxTokens: 60 "}
             <span className="usage-syntax usage-syntax--brace">{"}"}</span>
-            {") "}
-            <span className="usage-syntax usage-syntax--brace">{"}"}</span>
-            {"),\n"}
-            <span className="usage-syntax usage-syntax--brace">{"}"}</span>
-            {").fit(paintTasks)"}
+            {")"}
           </CopyBlock>
-          <p>
-            The rest is in the <Link href="/docs">docs</Link>.
-          </p>
+        </section>
+
+        <section className="usage-section" id="score" aria-labelledby="score-title">
+          <h2 id="score-title">Then score a run</h2>
+          <p>Execute the completion. Reward 1 if it ran. Same trainer.</p>
+          <CopyBlock code={RL}>
+            <span className="usage-syntax usage-syntax--keyword">import</span>
+            {" { execute, ok, reinforce, score } "}
+            <span className="usage-syntax usage-syntax--keyword">from</span>{" "}
+            <span className="usage-syntax usage-syntax--string">&apos;veritykit&apos;</span>
+            {"\n\nawait createTrainer(\n  "}
+            <span className="usage-syntax usage-syntax--brace">{"{"}</span>
+            {"\n    model,\n    method: reinforce(\n      "}
+            <span className="usage-syntax usage-syntax--brace">{"{"}</span>
+            {"\n        bridge: execute("}
+            <span className="usage-syntax usage-syntax--brace">{"{"}</span>
+            {" runtime: 'javascript' "}
+            <span className="usage-syntax usage-syntax--brace">{"}"}</span>
+            {"),\n        verifier: score(ok()),\n      "}
+            <span className="usage-syntax usage-syntax--brace">{"}"}</span>
+            {"),\n  "}
+            <span className="usage-syntax usage-syntax--brace">{"}"}</span>
+            {",\n).fit(tasks)"}
+          </CopyBlock>
+        </section>
+
+        <section className="usage-section" id="hosted" aria-labelledby="hosted-title">
+          <h2 id="hosted-title">Or evaluate a hosted model</h2>
+          <p>No backprop. Advantage is already on the groups.</p>
+          <CopyBlock code={HOSTED}>
+            <span className="usage-syntax usage-syntax--keyword">import</span>
+            {" { exportGroups, httpPolicy, paintEnvironment, rollout } "}
+            <span className="usage-syntax usage-syntax--keyword">from</span>{" "}
+            <span className="usage-syntax usage-syntax--string">&apos;veritykit&apos;</span>
+            {"\n\n"}
+            <span className="usage-syntax usage-syntax--keyword">const</span>
+            {" groups = await rollout(\n  paintEnvironment(),\n  httpPolicy("}
+            <span className="usage-syntax usage-syntax--brace">{"{"}</span>
+            {" model: 'openai/gpt-4.1-mini' "}
+            <span className="usage-syntax usage-syntax--brace">{"}"}</span>
+            {"),\n)\nconsole.log(exportGroups(groups))"}
+          </CopyBlock>
         </section>
 
         <section className="usage-section" id="prompts" aria-labelledby="prompts-title">
           <h2 id="prompts-title">Prompts</h2>
-          <p>Describe the task. Let an agent wire the trainer.</p>
+          <p>Paste one into an agent.</p>
           <div className="usage-prompt-list">
             {PROMPTS.map((prompt) => (
               <article className="usage-prompt" key={prompt.title}>
@@ -118,8 +172,8 @@ export function UsageGuide() {
 
         <footer className="usage-footer">
           <p>
-            MIT. <Link href="/docs">Docs</Link>.{" "}
-            <a href={GITHUB}>GitHub</a>. <code>pnpm example:paint</code>
+            MIT. <Link href="/docs">Docs</Link>. <a href={GITHUB}>GitHub</a>.{" "}
+            <code>pnpm example:lm</code>
           </p>
         </footer>
       </div>

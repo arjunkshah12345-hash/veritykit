@@ -29,14 +29,13 @@ export default function EnvironmentsDocs() {
     <article>
       <h2>Environments</h2>
       <p>
-        An environment is a dataset plus a bridge plus a verifier. Use the same object to train the
-        local GPT or to evaluate a hosted policy.
+        An environment is tasks, a way to run the output, and a scorer. Use it with the local model
+        or with <code>httpPolicy</code>.
       </p>
       <CopyBlock code={EVAL}>{EVAL}</CopyBlock>
       <p>
-        <code>httpPolicy</code> is OpenAI-compatible. It does not backprop.{" "}
-        <code>exportGroups(groups)</code> writes JSONL. Advantage is already computed.{" "}
-        <code>paintEnvironment()</code> wraps each prompt with <code>canvasPrompt()</code>.
+        <code>httpPolicy</code> is OpenAI-compatible. It does not train the remote model.{" "}
+        <code>exportGroups(groups)</code> writes JSONL with rewards and advantages.
       </p>
 
       <h3>No API key</h3>

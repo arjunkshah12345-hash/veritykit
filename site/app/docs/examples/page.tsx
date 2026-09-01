@@ -15,7 +15,7 @@ export default function ExamplesDocs() {
   return (
     <article>
       <h2>Examples</h2>
-      <p>Four scripts in the repo. Each one should move a number without an API key.</p>
+      <p>Scripts in the repo. Each one runs without an API key.</p>
       <CopyBlock code={RUN}>{RUN}</CopyBlock>
       <table className="docs-table">
         <thead>
@@ -41,7 +41,7 @@ export default function ExamplesDocs() {
             <td>
               <code>examples/unverifiable.ts</code>
             </td>
-            <td>Mix SFT, JEPO, and process checks on proofs with no short gold answer.</td>
+            <td>Mix SFT, JEPO, and process checks on long-form proofs.</td>
           </tr>
           <tr>
             <td>
@@ -52,8 +52,7 @@ export default function ExamplesDocs() {
         </tbody>
       </table>
       <p>
-        Expected local trainer: SFT loss on the character LM goes from about 5.5 toward 0. The
-        unverifiable mix should drop the Jensen term. Those numbers are laptop-scale, not a
+        On a laptop, SFT loss on the character LM should fall from about 5.5 toward 0. Not a
         benchmark claim.
       </p>
     </article>

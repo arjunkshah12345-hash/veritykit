@@ -24,8 +24,8 @@ export default function PaintDocs() {
     <article>
       <h2>Paint with JavaScript</h2>
       <p>
-        The picture is subjective. The program is not. Gate on “it ran” and “it used the API.” Score
-        what you can measure. For taste, use pairwise against a pool.
+        Example environment: the model writes canvas JavaScript. Train with SFT, then GRPO against
+        an executor. Score “it ran,” “it used the API,” coverage, and color.
       </p>
       <CopyBlock code={CODE}>{CODE}</CopyBlock>
       <table className="docs-table">
