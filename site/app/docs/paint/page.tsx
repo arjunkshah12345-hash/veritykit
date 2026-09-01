@@ -63,8 +63,9 @@ export default function PaintDocs() {
         </tbody>
       </table>
       <p>
-        Reward design is in <Link href="/docs/reward">Reward</Link>. Run{" "}
-        <code>pnpm example:paint</code>.
+        <code>canvasPrompt(task)</code> appends the allowlist. <code>paintPool()</code> is the
+        working programs for <code>pairwise</code>. Reward design is in{" "}
+        <Link href="/docs/reward">Reward</Link>. Run <code>pnpm example:paint</code>.
       </p>
     </article>
   );

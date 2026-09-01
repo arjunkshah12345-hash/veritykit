@@ -21,4 +21,4 @@ const taste = pairwise({
 const verifier = combine({ verifier: compile, gate: true }, { verifier: taste, weight: 1 });
 ```
 
-`paintEnvironment()` ships the compile gates plus coverage and color. Add `pairwise` when you have a pool you trust.
+`paintEnvironment()` ships the compile gates plus coverage and color. Prompts include `canvasPrompt()` — the allowlist, not an API dump. `paintPool()` is the working programs. `pairwise` samples `n` references from the pool.

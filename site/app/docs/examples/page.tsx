@@ -8,13 +8,14 @@ export const metadata: Metadata = {
 
 const RUN = `pnpm example:lm
 pnpm example:paint
-pnpm example:open`;
+pnpm example:open
+pnpm example:eval`;
 
 export default function ExamplesDocs() {
   return (
     <article>
       <h2>Examples</h2>
-      <p>Three scripts in the repo. Each one should move a number without an API key.</p>
+      <p>Four scripts in the repo. Each one should move a number without an API key.</p>
       <CopyBlock code={RUN}>{RUN}</CopyBlock>
       <table className="docs-table">
         <thead>
@@ -41,6 +42,12 @@ export default function ExamplesDocs() {
               <code>examples/unverifiable.ts</code>
             </td>
             <td>Mix SFT, JEPO, and process checks on proofs with no short gold answer.</td>
+          </tr>
+          <tr>
+            <td>
+              <code>examples/eval-paint.ts</code>
+            </td>
+            <td>Roll out the paint env with a mock policy. Print JSONL groups.</td>
           </tr>
         </tbody>
       </table>

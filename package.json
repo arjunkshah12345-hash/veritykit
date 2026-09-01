@@ -36,6 +36,7 @@
     "example:lm": "tsx examples/char-lm.ts",
     "example:paint": "tsx examples/paint-js.ts",
     "example:open": "tsx examples/unverifiable.ts",
+    "example:eval": "tsx examples/eval-paint.ts",
     "site": "pnpm --dir site dev",
     "site:build": "pnpm --dir site build"
   },

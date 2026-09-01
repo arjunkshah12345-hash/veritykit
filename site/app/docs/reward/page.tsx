@@ -44,8 +44,9 @@ export default function RewardDocs() {
       </ul>
       <CopyBlock code={CODE}>{CODE}</CopyBlock>
       <p>
-        <code>paintEnvironment()</code> ships the compile gates plus coverage and color. Add{" "}
-        <code>pairwise</code> when you have a pool you trust.
+        <code>paintEnvironment()</code> ships the compile gates plus coverage and color. Prompts
+        include <code>canvasPrompt()</code>. <code>paintPool()</code> is the working programs.{" "}
+        <code>pairwise</code> samples <code>n</code> references from the pool.
       </p>
     </article>
   );

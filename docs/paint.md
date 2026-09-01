@@ -23,4 +23,4 @@ await createTrainer({
 | `coverage` | Non-blank pixels |
 | `colorDiversity` | Distinct quantized colors |
 
-See [Reward](./reward.md). `pnpm example:paint`.
+`canvasPrompt(task)` appends the allowlist. `paintPool()` is the working programs for `pairwise`. See [Reward](./reward.md). `pnpm example:paint`.

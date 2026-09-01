@@ -20,4 +20,4 @@ await rollout(
 );
 ```
 
-Build your own with `environment({ name, tasks, bridge, verifier })`.
+`paintEnvironment()` wraps each prompt with `canvasPrompt()`. Build your own with `environment({ name, tasks, bridge, verifier })`.

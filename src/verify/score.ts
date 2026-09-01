@@ -66,11 +66,12 @@ export function pairwise(options: {
   references: string[];
   compare: (input: { task: Task; candidate: string; against: string }) => number | Promise<number>;
   n?: number;
+  seed?: number;
 }): Verifier {
   const n = options.n ?? 2;
   return {
     async score({ task, completion }) {
-      const refs = options.references.slice(0, Math.max(1, n));
+      const refs = pick(options.references, n, options.seed);
       if (refs.length === 0) return 0;
       let wins = 0;
       for (const against of refs) {
@@ -92,6 +93,7 @@ export function combine(...parts: Array<{ verifier: Verifier; weight?: number; g
         if (part.gate && value === 0) return 0;
         if (!part.gate) acc += value * ((part.weight ?? 1) / total);
       }
+      if (scored.length === 0) return 1;
       return clamp(acc);
     },
   };
@@ -106,6 +108,24 @@ export function defaultVerifier(_bridge?: Bridge): Verifier {
       return clamp(vals.reduce((a, b) => a + b, 0) / vals.length);
     },
   };
+}
+
+function pick<T>(items: T[], n: number, seed?: number): T[] {
+  if (items.length === 0) return [];
+  const k = Math.min(Math.max(1, n), items.length);
+  const copy = items.slice();
+  let state = seed ?? Math.floor(Math.random() * 2 ** 31);
+  const rand = () => {
+    state = (Math.imul(1664525, state) + 1013904223) >>> 0;
+    return state / 2 ** 32;
+  };
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    const tmp = copy[i]!;
+    copy[i] = copy[j]!;
+    copy[j] = tmp;
+  }
+  return copy.slice(0, k);
 }
 
 function clamp(n: number): number {

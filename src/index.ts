@@ -12,7 +12,16 @@ export { extractCode, splitThought } from "./runtime/extract.js";
 
 export { environment, rollout } from "./env/environment.js";
 export { exportGroups } from "./env/export.js";
-export { CANVAS_API, paintEnvironment, paintCorpus, proofCorpus, processSketch } from "./env/presets.js";
+export {
+  CANVAS_API,
+  CANVAS_ALLOWLIST,
+  canvasPrompt,
+  paintEnvironment,
+  paintCorpus,
+  paintPool,
+  proofCorpus,
+  processSketch,
+} from "./env/presets.js";
 
 export { createTrainer } from "./train/trainer.js";
 export { sft } from "./train/sft.js";

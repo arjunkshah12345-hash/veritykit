@@ -34,7 +34,7 @@ export default function ApiDocs() {
               <code>createTrainer</code>
             </td>
             <td>
-              <code>createTrainer({"{ model, method, epochs, batchSize, optimizer, onStep }"})</code>
+              <code>createTrainer({"{ model, method, epochs, batchSize, optimizer, maxGradNorm, onStep }"})</code>
             </td>
           </tr>
           <tr>
@@ -120,7 +120,7 @@ export default function ApiDocs() {
               <code>pairwise</code>
             </td>
             <td>
-              <code>pairwise({"{ references, compare, n }"})</code>
+              <code>pairwise({"{ references, compare, n, seed }"})</code>
             </td>
           </tr>
           <tr>
@@ -128,6 +128,18 @@ export default function ApiDocs() {
               <code>combine</code>
             </td>
             <td>Mix verifiers. <code>gate: true</code> zeros the rest</td>
+          </tr>
+          <tr>
+            <td>
+              <code>canvasPrompt</code>
+            </td>
+            <td>Task plus the canvas allowlist</td>
+          </tr>
+          <tr>
+            <td>
+              <code>paintPool</code>
+            </td>
+            <td>Working programs from <code>paintCorpus</code></td>
           </tr>
           <tr>
             <td>

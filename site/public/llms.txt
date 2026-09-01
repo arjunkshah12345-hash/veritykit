@@ -35,8 +35,9 @@ mockPolicy — tests
 
 ## Reward
 
-gate(ran()), gate(uses(CANVAS_API)), pairwise({ references, compare })
+gate(ran()), gate(uses(CANVAS_API)), pairwise({ references, compare, n, seed })
 combine({ verifier: compile, gate: true }, { verifier: taste })
+canvasPrompt(task) · paintPool()
 Do not stack correlated aesthetic judges.
 
 ## Docs

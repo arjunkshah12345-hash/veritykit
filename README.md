@@ -68,6 +68,7 @@ pnpm test
 pnpm example:lm       # SFT a tiny language model
 pnpm example:paint    # SFT, then GRPO on canvas JS
 pnpm example:open     # SFT + JEPO + process on proofs
+pnpm example:eval     # rollout + exportGroups, no API key
 ```
 
 The JS runner uses `node:vm`. Isolation for a training loop, not a security sandbox.

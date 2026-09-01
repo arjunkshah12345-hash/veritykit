@@ -35,7 +35,8 @@ export default function EnvironmentsDocs() {
       <CopyBlock code={EVAL}>{EVAL}</CopyBlock>
       <p>
         <code>httpPolicy</code> is OpenAI-compatible. It does not backprop.{" "}
-        <code>exportGroups(groups)</code> writes JSONL. Advantage is already computed.
+        <code>exportGroups(groups)</code> writes JSONL. Advantage is already computed.{" "}
+        <code>paintEnvironment()</code> wraps each prompt with <code>canvasPrompt()</code>.
       </p>
 
       <h3>No API key</h3>
